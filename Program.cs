@@ -13,6 +13,7 @@ namespace Graphics_Library
             Random random = new Random();
 
             Canvas canvas = new Canvas(800, 600, "mycanvas");
+            canvas.InitCanvas();
 
             bool running = true;
             uint frame = 0;

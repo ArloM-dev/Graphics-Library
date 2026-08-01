@@ -19,8 +19,11 @@ namespace Graphics_Library.Rendering
             this.Height = Height;
             this.name = name;
             frameBuffer = new uint[Width * Height];
+        }
 
-            // Safely initializes SDL
+        public void InitCanvas()
+        {
+                        // Safely initializes SDL
             if (!SDL.Init(SDL.InitFlags.Video))
             {
                 Console.WriteLine("Failed to initialize SDL");
