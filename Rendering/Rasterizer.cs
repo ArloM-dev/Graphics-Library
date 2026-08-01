@@ -1,7 +1,8 @@
 using System.Drawing;
 using System.Numerics;
+using Graphics_Library.Objects;
 
-namespace Graphics_Library
+namespace Graphics_Library.Rendering
 {
     public static class Rasterizer
     {

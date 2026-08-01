@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using System.Drawing;
-using SDL3;
+using Graphics_Library.Rendering;
 
 namespace Graphics_Library
 {
@@ -18,7 +18,7 @@ namespace Graphics_Library
             {
                 running = !canvas.CheckQuit();
 
-                Triangle testtriangle = new Triangle(new Vector2(100,100),new Vector2(300,600),new Vector2(500,500),Color.FromArgb(255,100,100));
+                Objects.Triangle testtriangle = new Objects.Triangle(new Vector2(100,100),new Vector2(300,600),new Vector2(500,500),Color.FromArgb(255,100,100));
                 canvas = Rasterizer.DrawTriangle(testtriangle,canvas);
                 
                 canvas.UpdateCanvas();

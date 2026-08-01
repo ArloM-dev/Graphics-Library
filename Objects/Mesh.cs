@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Graphics_Library
+namespace Graphics_Library.Objects
 {
     public class Mesh
     {

@@ -1,8 +1,6 @@
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 using SDL3;
 
-namespace Graphics_Library
+namespace Graphics_Library.Rendering
 {
     public class Canvas
     {
@@ -20,7 +18,7 @@ namespace Graphics_Library
             this.Width = Width;
             this.Height = Height;
             this.name = name;
-            this.frameBuffer = new uint[Width * Height];
+            frameBuffer = new uint[Width * Height];
 
             // Safely initializes SDL
             if (!SDL.Init(SDL.InitFlags.Video))
@@ -40,7 +38,7 @@ namespace Graphics_Library
             this.renderer = renderer;
 
             // Creates texture
-            this.texture = SDL.CreateTexture(renderer,SDL.PixelFormat.XRGB8888,SDL.TextureAccess.Streaming,Width,Height);
+            texture = SDL.CreateTexture(renderer,SDL.PixelFormat.XRGB8888,SDL.TextureAccess.Streaming,Width,Height);
         }
 
         public bool CheckQuit()

@@ -1,8 +1,7 @@
 using System.Drawing;
 using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 
-namespace Graphics_Library
+namespace Graphics_Library.Objects
 {
     public class Triangle
     {
