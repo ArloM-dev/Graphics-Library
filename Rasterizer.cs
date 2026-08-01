@@ -5,16 +5,16 @@ namespace Graphics_Library
 {
     public static class Rasterizer
     {
-        public static uint[] DrawPixel(Vector2 pixel, Color colour, uint[] pixels)
+        public static Canvas DrawPixel(Vector2 pixel, Color colour, Canvas canvas)
         {
             uint drawpixel =
             (uint)((colour.R << 16) |
             (colour.G << 8) |
             colour.B);
-            pixels[(int)(pixel.Y * Program.Width + pixel.X)] = drawpixel;
-            return pixels;
+            canvas.frameBuffer[(int)(pixel.Y * canvas.Width + pixel.X)] = drawpixel;
+            return canvas;
         }
-        public static uint[] DrawTriangle(Triangle triangle, uint[] pixels)
+        public static Canvas DrawTriangle(Triangle triangle, Canvas canvas)
         {
             int minX = (int)Math.Min(triangle.p1.X, Math.Min(triangle.p2.X, triangle.p3.X));
             int minY = (int)Math.Min(triangle.p1.Y, Math.Min(triangle.p2.Y, triangle.p3.Y));
@@ -40,11 +40,11 @@ namespace Graphics_Library
                     bool allNegative = e1 <= 0 && e2 <= 0 && e3 <= 0;
                     if (allNegative || allPositive)
                     {
-                        pixels = DrawPixel(new Vector2(x,y),triangle.colour, pixels);
+                        canvas = DrawPixel(new Vector2(x,y),triangle.colour, canvas);
                     }
                 }
             }
-            return pixels;
+            return canvas;
 
         }
 
