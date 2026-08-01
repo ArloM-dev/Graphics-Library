@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Numerics;
 
 namespace Graphics_Library.Objects
@@ -6,10 +7,12 @@ namespace Graphics_Library.Objects
     {
         public Vector3[] points;
         public int[] index;
-        public Mesh(Vector3[] points, int[] index)
+        public Color[] colours;
+        public Mesh(Vector3[] points, int[] index, Color[] colours)
         {
             this.points = points;
             this.index = index;
+            this.colours = colours;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Graphics_Library.Rendering
                 Vector3 p3 = mesh.points[mesh.index[i+2]];
                 float depth = (p1.Z + p2.Z + p3.Z) / 3;
                 depths[i/3] = depth;
-                Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),Color.FromArgb((int)p1.X/2, (int)p2.X/2, (int)p3.X/2));
+                Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),mesh.colours[i/3]);
                 triangles[i/3] = triangle;
             }
             triangles = OrderTriangles(triangles,depths);

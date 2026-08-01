@@ -1,4 +1,6 @@
+using System.Drawing;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Graphics_Library.Objects
 {
@@ -57,7 +59,16 @@ namespace Graphics_Library.Objects
                 1,7,5, 1,5,3
             ];
 
-            cubeMesh = new Mesh(points, index);
+            Color[] colours = [
+                Color.Red, Color.Red,
+                Color.Green, Color.Green,
+                Color.Blue, Color.Blue,
+                Color.Yellow, Color.Yellow,
+                Color.Purple, Color.Purple,
+                Color.Brown, Color.Brown
+            ];
+
+            cubeMesh = new Mesh(points, index, colours);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Graphics_Library.Rendering
 
         public void InitCanvas()
         {
-                        // Safely initializes SDL
+            // Safely initializes SDL
             if (!SDL.Init(SDL.InitFlags.Video))
             {
                 Console.WriteLine("Failed to initialize SDL");
