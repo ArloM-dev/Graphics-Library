@@ -21,6 +21,11 @@ namespace Graphics_Library.Rendering
             frameBuffer = new uint[Width * Height];
         }
 
+        public void ClearCanvas()
+        {
+            frameBuffer = new uint[Width * Height];
+        }
+
         public void InitCanvas()
         {
                         // Safely initializes SDL

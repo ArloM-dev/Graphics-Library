@@ -4,25 +4,25 @@ namespace Graphics_Library.Objects
 {
     public class Cube
     {
-        Vector3[] points;
+        Vector3[] points = new Vector3[8];
         int sideLength;
         Vector3 center;
         Vector3 rotation;
-        Mesh cubeMesh;
+        public Mesh cubeMesh;
         public Cube(int sideLength, Vector3 center, Vector3 rotation)
         {
             this.sideLength = sideLength;
             this.center = center;
             this.rotation = rotation;
             Vector3[] originalPoints = [
-                center + new Vector3(sideLength/2, sideLength/2, sideLength/2),
-                center + new Vector3(-sideLength/2, sideLength/2, sideLength/2),
-                center + new Vector3(sideLength/2, -sideLength/2, sideLength/2),
-                center + new Vector3(sideLength/2, sideLength/2, -sideLength/2),
-                center + new Vector3(-sideLength/2, -sideLength/2, sideLength/2),
-                center + new Vector3(-sideLength/2, sideLength/2, -sideLength/2),
-                center + new Vector3(sideLength/2, -sideLength/2, -sideLength/2),
-                center + new Vector3(-sideLength/2, -sideLength/2, -sideLength/2),
+                new Vector3(sideLength/2, sideLength/2, sideLength/2),
+                new Vector3(-sideLength/2, sideLength/2, sideLength/2),
+                new Vector3(sideLength/2, -sideLength/2, sideLength/2),
+                new Vector3(-sideLength/2, -sideLength/2, sideLength/2),
+                new Vector3(sideLength/2, -sideLength/2, -sideLength/2),
+                new Vector3(-sideLength/2, -sideLength/2, -sideLength/2),
+                new Vector3(sideLength/2, sideLength/2, -sideLength/2),
+                new Vector3(-sideLength/2, sideLength/2, -sideLength/2),
             ];
 
             Vector3[] rotatedPoints = new Vector3[8];
@@ -42,8 +42,22 @@ namespace Graphics_Library.Objects
                 
                 rotatedPoints[i] = new Vector3((float)x2, (float)y2, (float)z2);
             }
-            points = rotatedPoints;
-            cubeMesh = new Mesh(points);
+
+            for (int i = 0; i < 8; i++)
+            {
+                points[i] = center + rotatedPoints[i];
+            }
+
+            int[] index = [
+                0,1,2, 1,2,3,
+                2,3,4, 3,4,5,
+                4,5,6, 5,6,7,
+                0,1,7, 7,0,6,
+                0,6,4, 0,4,2,
+                1,7,5, 1,5,3
+            ];
+
+            cubeMesh = new Mesh(points, index);
         }
     }
 }

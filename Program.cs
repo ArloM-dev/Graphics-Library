@@ -20,12 +20,9 @@ namespace Graphics_Library
             while (running)
             {
                 running = !canvas.CheckQuit();
-                Vector2 p1 = new Vector2(random.Next(0,801),random.Next(0,601));
-                Vector2 p2 = new Vector2(random.Next(0,801),random.Next(0,601));
-                Vector2 p3 = new Vector2(random.Next(0,801),random.Next(0,601));
-                Color colour = Color.FromArgb(random.Next(0,256),random.Next(0,256),random.Next(0,256));
-                Triangle triangle = new Triangle(p1,p2,p3,colour);
-                canvas = Rasterizer.DrawTriangle(triangle, canvas);
+                canvas.ClearCanvas();
+                Cube cube = new Cube(100, new Vector3(300,300,300),new Vector3(((float)frame)/400,((float)frame)/400,0));
+                Rasterizer.DrawMesh(cube.cubeMesh, canvas);
                 
                 canvas.UpdateCanvas();
                 frame += 1;

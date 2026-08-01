@@ -49,9 +49,18 @@ namespace Graphics_Library.Rendering
 
         }
 
-        public static uint[] DrawMesh(Mesh mesh, uint[] pixels)
+        public static Canvas DrawMesh(Mesh mesh, Canvas canvas)
         {
-            return pixels;
+            for (int i = 0; i < mesh.index.Length-2; i+=3)
+            {
+                Vector3 p1 = mesh.points[mesh.index[i]];
+                Vector3 p2 = mesh.points[mesh.index[i+1]];
+                Vector3 p3 = mesh.points[mesh.index[i+2]];
+
+                Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),Color.FromArgb((int)p1.X/2, (int)p2.X/2, (int)p3.X/2));
+                DrawTriangle(triangle,canvas);
+            }
+            return canvas;
         }
     }
 }
