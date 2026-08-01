@@ -43,6 +43,19 @@ namespace Graphics_Library
             this.texture = SDL.CreateTexture(renderer,SDL.PixelFormat.XRGB8888,SDL.TextureAccess.Streaming,Width,Height);
         }
 
+        public bool CheckQuit()
+        {
+            while (SDL.PollEvent(out var e))
+            {
+                // Cast raw event type to the explicit SDL EventType enum
+                if ((SDL.EventType)e.Type == SDL.EventType.Quit)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void UpdateCanvas()
         {
             unsafe
