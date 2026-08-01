@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Drawing;
 using Graphics_Library.Rendering;
 using Graphics_Library.Objects;
 

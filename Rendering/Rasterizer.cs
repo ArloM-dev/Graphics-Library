@@ -51,16 +51,55 @@ namespace Graphics_Library.Rendering
 
         public static Canvas DrawMesh(Mesh mesh, Canvas canvas)
         {
+            Triangle[] triangles = new Triangle[12];
+            float[] depths = new float[12];
             for (int i = 0; i < mesh.index.Length-2; i+=3)
             {
                 Vector3 p1 = mesh.points[mesh.index[i]];
                 Vector3 p2 = mesh.points[mesh.index[i+1]];
                 Vector3 p3 = mesh.points[mesh.index[i+2]];
-
+                float depth = (p1.Z + p2.Z + p3.Z) / 3;
+                depths[i/3] = depth;
                 Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),Color.FromArgb((int)p1.X/2, (int)p2.X/2, (int)p3.X/2));
-                DrawTriangle(triangle,canvas);
+                triangles[i/3] = triangle;
+            }
+            triangles = OrderTriangles(triangles,depths);
+            foreach (Triangle triangle in triangles)
+            {
+                canvas = DrawTriangle(triangle,canvas);
             }
             return canvas;
+        }
+
+        private static Triangle[] OrderTriangles(Triangle[] triangles, float[] depths)
+        {
+            bool unsorted = true;
+            while (unsorted)
+            {
+                int count = 0;
+                for (int i = 0; i < 11; i++)
+                {
+                    if (depths[i] > depths[i+1])
+                    {
+                        float temp = depths[i];
+                        depths[i] = depths[i+1];
+                        depths[i+1] = temp;
+                        Triangle temp2 = triangles[i];
+                        triangles[i] = triangles[i+1];
+                        triangles[i+1] = temp2;
+                        count = 0;
+                    }
+                    else if (count == 10)
+                    {
+                        unsorted = false;
+                    }
+                    else
+                    {
+                        count += 1;
+                    }
+                }
+            }
+            return triangles;
         }
     }
 }
