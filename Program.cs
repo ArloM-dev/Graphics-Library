@@ -36,8 +36,6 @@ namespace Graphics_Library
             while (running)
             {
 
-                
-
                 while (SDL.PollEvent(out var e))
                 {
                     // Cast raw event type to the explicit SDL EventType enum

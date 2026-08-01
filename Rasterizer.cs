@@ -47,5 +47,10 @@ namespace Graphics_Library
             return pixels;
 
         }
+
+        public static uint[] DrawMesh(Mesh mesh, uint[] pixels)
+        {
+            return pixels;
+        }
     }
 }

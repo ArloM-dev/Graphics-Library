@@ -6,7 +6,7 @@ namespace Graphics_Library
 {
     public class Triangle
     {
-        public Vector2 p1, p2, p3 = new Vector2();
+        public Vector2 p1, p2, p3;
         public Color colour = new Color();
         public Triangle(Vector2 p1, Vector2 p2, Vector2 p3, Color colour)
         {
