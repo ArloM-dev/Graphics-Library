@@ -76,19 +76,27 @@ namespace Graphics_Library.Rendering
         private static Vector3[] GetPoints(MeshObject meshobject)
         {
             Vector3[] points = new Vector3[8];
+
+            double sinX = Math.Sin(meshobject.rotation.X);
+            double cosX = Math.Cos(meshobject.rotation.X);
+            double sinY = Math.Sin(meshobject.rotation.Y);
+            double cosY = Math.Cos(meshobject.rotation.Y);
+            double sinZ = Math.Sin(meshobject.rotation.Z);
+            double cosZ = Math.Cos(meshobject.rotation.Z);
+
             for (int i = 0; i < 8; i++)
             {
                 Vector3 point = meshobject.mesh?.points[i] ?? new Vector3();
 
                 // X rotation
-                double y1 = (point.Y * Math.Cos(meshobject.rotation.X)) - (point.Z * Math.Sin(meshobject.rotation.X));
-                double z1 = (point.Y * Math.Sin(meshobject.rotation.X)) + (point.Z * Math.Cos(meshobject.rotation.X));
+                double y1 = (point.Y * cosX) - (point.Z * sinX);
+                double z1 = (point.Y * sinX) + (point.Z * cosX);
                 // Y rotation
-                double x1 = (point.X * Math.Cos(meshobject.rotation.Y)) + (z1 * Math.Sin(meshobject.rotation.Y));
-                double z2 = (-point.X * Math.Sin(meshobject.rotation.Y)) + (z1 * Math.Cos(meshobject.rotation.Y));
+                double x1 = (point.X * cosY) + (z1 * sinY);
+                double z2 = (-point.X * sinY) + (z1 * cosY);
                 // Z rotation
-                double x2 = (x1 * Math.Cos(meshobject.rotation.Z)) - (y1 * Math.Sin(meshobject.rotation.Z));
-                double y2 = (x1 * Math.Sin(meshobject.rotation.Z)) + (y1 * Math.Cos(meshobject.rotation.Z));
+                double x2 = (x1 * cosZ) - (y1 * sinZ);
+                double y2 = (x1 * sinZ) + (y1 * cosZ);
                 
                 points[i] = (new Vector3((float)x2, (float)y2, (float)z2) * meshobject.scale) + meshobject.position;
             }
