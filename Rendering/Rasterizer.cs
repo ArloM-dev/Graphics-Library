@@ -6,7 +6,7 @@ namespace Graphics_Library.Rendering
 {
     public static class Rasterizer
     {
-        public static Canvas DrawPixel(Vector2 pixel, Color colour, Canvas canvas)
+        public static void DrawPixel(Vector2 pixel, Color colour, Canvas canvas)
         {
             uint drawpixel =
             (uint)((colour.R << 16) |
@@ -16,9 +16,8 @@ namespace Graphics_Library.Rendering
             {
                 canvas.frameBuffer[(int)(pixel.Y * canvas.Width + pixel.X)] = drawpixel;
             }
-            return canvas;
         }
-        public static Canvas DrawTriangle(Triangle triangle, Canvas canvas)
+        public static void DrawTriangle(Triangle triangle, Canvas canvas)
         {
             int minX = (int)Math.Min(triangle.p1.X, Math.Min(triangle.p2.X, triangle.p3.X));
             int minY = (int)Math.Min(triangle.p1.Y, Math.Min(triangle.p2.Y, triangle.p3.Y));
@@ -44,15 +43,13 @@ namespace Graphics_Library.Rendering
                     bool allNegative = e1 <= 0 && e2 <= 0 && e3 <= 0;
                     if (allNegative || allPositive)
                     {
-                        canvas = DrawPixel(new Vector2(x,y),triangle.colour, canvas);
+                        DrawPixel(new Vector2(x,y),triangle.colour, canvas);
                     }
                 }
             }
-            return canvas;
-
         }
 
-        public static Canvas DrawMesh(MeshObject meshobject, Canvas canvas)
+        public static void DrawMesh(MeshObject meshobject, Canvas canvas)
         {
             Triangle[] triangles = new Triangle[12];
             float[] depths = new float[12];
@@ -70,9 +67,9 @@ namespace Graphics_Library.Rendering
             triangles = OrderTriangles(triangles,depths);
             foreach (Triangle triangle in triangles)
             {
-                canvas = DrawTriangle(triangle,canvas);
+                DrawTriangle(triangle,canvas);
             }
-            return canvas;
+            //return canvas;
         }
 
         private static Vector3[] GetPoints(MeshObject meshobject)
