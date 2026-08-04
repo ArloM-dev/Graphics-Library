@@ -12,6 +12,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="SDL3-CS" Version="3.4.12.4" />
     <PackageReference Include="SDL3-CS.Windows" Version="3.4.12.1" />
+    <None Update="Data\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

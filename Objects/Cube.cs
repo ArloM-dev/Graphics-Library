@@ -15,7 +15,8 @@ namespace Graphics_Library.Objects
             this.position = position;
             this.rotation = rotation;
 
-            string data = File.ReadAllText("/home/arlo/Projects/Graphics Library/Objects/Meshes/cube.json");
+            string path = AppContext.BaseDirectory;
+            string data = File.ReadAllText(path + "Data/Meshes/cube.json");
             mesh = JsonConvert.DeserializeObject<Mesh>(data);
 
             colours = [
