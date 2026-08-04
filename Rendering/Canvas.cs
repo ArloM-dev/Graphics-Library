@@ -1,3 +1,5 @@
+using System.Numerics;
+using Graphics_Library.Objects;
 using SDL3;
 
 namespace Graphics_Library.Rendering
@@ -36,7 +38,7 @@ namespace Graphics_Library.Rendering
             }
 
             // Safely creates window and renderer
-            if (!SDL.CreateWindowAndRenderer("Blank window", Width, Height, 0, out IntPtr window, out IntPtr renderer))
+            if (!SDL.CreateWindowAndRenderer(name, Width, Height, 0, out IntPtr window, out IntPtr renderer))
             {
                 Console.WriteLine("Failed to create window or renderer");
                 SDL.Quit();

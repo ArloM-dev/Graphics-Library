@@ -21,12 +21,12 @@ namespace Graphics_Library
             float frame = 0;
 
 
-            Cube cube = new Cube(100, new Vector3(300,300,300),new Vector3(0,0,0));
+            Cube cube = new Cube(100, new Vector3(300,300,300),new Vector3(0, (float)0.5, (float)0.5));
             while (running)
             {
                 running = !canvas.CheckQuit();
                 canvas.ClearCanvas();
-                cube.rotation += new Vector3((float)0.001, (float)0.001, (float)0.001);
+                cube.rotation += new Vector3((float)0.01,0,0);
                 Rasterizer.DrawMesh(cube, canvas);
                 canvas.UpdateCanvas();
                 frame += 1;

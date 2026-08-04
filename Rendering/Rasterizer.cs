@@ -65,8 +65,7 @@ namespace Graphics_Library.Rendering
                 Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),meshobject.colours?[i] ?? Color.Purple);
                 triangles[i] = triangle;
             }
-            //triangles = OrderTriangles(triangles,depths);
-            Array.Sort(depths, triangles, Comparer<float>.Create((a, b) => b.CompareTo(a)));
+            triangles = OrderTriangles(triangles,depths);
             foreach (Triangle triangle in triangles)
             {
                 DrawTriangle(triangle,canvas);
