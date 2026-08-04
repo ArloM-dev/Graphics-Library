@@ -12,7 +12,7 @@ namespace Graphics_Library.Rendering
             (uint)((colour.R << 16) |
             (colour.G << 8) |
             colour.B);
-            if ((pixel.X < canvas.Width) & (pixel.Y < canvas.Height) & (pixel.X > 0) & (pixel.Y > 0))
+            if ((pixel.X < canvas.Width) && (pixel.Y < canvas.Height) && (pixel.X > 0) && (pixel.Y > 0))
             {
                 canvas.frameBuffer[(int)(pixel.Y * canvas.Width + pixel.X)] = drawpixel;
             }
@@ -39,10 +39,9 @@ namespace Graphics_Library.Rendering
                     double e3 = (x - triangle.p3.X) * (triangle.p1.Y - triangle.p3.Y) - (y - triangle.p3.Y) * (triangle.p1.X - triangle.p3.X);
 
                     // True if all signs match (all positive or all negative)
-                    bool allPositive = e1 >= 0 && e2 >= 0 && e3 >= 0;
-                    bool allNegative = e1 <= 0 && e2 <= 0 && e3 <= 0;
-                    bool allZero = (e1 == 0) && (e2 == 0) && (e3 == 0);
-                    if (allNegative || allPositive || allZero)
+                    bool allPositive = (e1 >= 0) && (e2 >= 0) && (e3 >= 0);
+                    bool allNegative = (e1 <= 0) && (e2 <= 0) && (e3 <= 0);
+                    if (allNegative || allPositive)
                     {
                         DrawPixel(new Vector2(x,y),triangle.colour, canvas);
                     }
@@ -52,10 +51,11 @@ namespace Graphics_Library.Rendering
 
         public static void DrawMesh(MeshObject meshobject, Canvas canvas)
         {
-            Triangle[] triangles = new Triangle[12];
-            float[] depths = new float[12];
+            Triangle[] triangles = new Triangle[meshobject.mesh.index.Length];
+            float[] depths = new float[meshobject.mesh.index.Length];
             Vector3[] points = GetPoints(meshobject);
-            for (int i = 0; i < meshobject.mesh?.index.Length; i+=1)
+
+            for (int i = 0; i < meshobject.mesh.index.Length; i+=1)
             {
                 Vector3 p1 = points[meshobject.mesh.index[i][0]];
                 Vector3 p2 = points[meshobject.mesh.index[i][1]];
@@ -65,17 +65,17 @@ namespace Graphics_Library.Rendering
                 Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),meshobject.colours?[i] ?? Color.Purple);
                 triangles[i] = triangle;
             }
-            triangles = OrderTriangles(triangles,depths);
+            //triangles = OrderTriangles(triangles,depths);
+            Array.Sort(depths, triangles, Comparer<float>.Create((a, b) => b.CompareTo(a)));
             foreach (Triangle triangle in triangles)
             {
                 DrawTriangle(triangle,canvas);
             }
-            //return canvas;
         }
 
         private static Vector3[] GetPoints(MeshObject meshobject)
         {
-            Vector3[] points = new Vector3[8];
+            Vector3[] points = new Vector3[meshobject.mesh.points.Length];
 
             double sinX = Math.Sin(meshobject.rotation.X);
             double cosX = Math.Cos(meshobject.rotation.X);
@@ -84,7 +84,7 @@ namespace Graphics_Library.Rendering
             double sinZ = Math.Sin(meshobject.rotation.Z);
             double cosZ = Math.Cos(meshobject.rotation.Z);
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < meshobject.mesh?.points.Length; i++)
             {
                 Vector3 point = meshobject.mesh?.points[i] ?? new Vector3();
 
@@ -109,9 +109,9 @@ namespace Graphics_Library.Rendering
             while (unsorted)
             {
                 int count = 0;
-                for (int i = 0; i < 11; i++)
+                for (int i = 0; i < depths.Length - 1; i++)
                 {
-                    if (depths[i] > depths[i+1])
+                    if (depths[i] < depths[i+1])
                     {
                         float temp = depths[i];
                         depths[i] = depths[i+1];
@@ -121,7 +121,7 @@ namespace Graphics_Library.Rendering
                         triangles[i+1] = temp2;
                         count = 0;
                     }
-                    else if (count == 10)
+                    else if (count == depths.Length-2)
                     {
                         unsorted = false;
                     }

@@ -17,7 +17,7 @@ namespace Graphics_Library.Objects
 
     public class MeshObject
     {
-        public Mesh? mesh;
+        public Mesh mesh = new Mesh(new Vector3[1], new int[1][]);
         public Vector3 position;
         public Vector3 rotation;
         public float scale;
@@ -27,7 +27,7 @@ namespace Graphics_Library.Objects
         {
             string appPath = AppContext.BaseDirectory;
             string data = File.ReadAllText(appPath + path);
-            mesh = JsonConvert.DeserializeObject<Mesh>(data);
+            mesh = JsonConvert.DeserializeObject<Mesh>(data) ?? mesh;
         }
     }
 }
