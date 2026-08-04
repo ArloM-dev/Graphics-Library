@@ -1,8 +1,6 @@
 using System.Drawing;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using Newtonsoft.Json;
+
 
 namespace Graphics_Library.Objects
 {
@@ -15,17 +13,15 @@ namespace Graphics_Library.Objects
             this.position = position;
             this.rotation = rotation;
 
-            string path = AppContext.BaseDirectory;
-            string data = File.ReadAllText(path + "Data/Meshes/cube.json");
-            mesh = JsonConvert.DeserializeObject<Mesh>(data);
+            MeshFromJson("Data/Meshes/cube.json");
 
             colours = [
-                Color.Red, Color.Red,
-                Color.Green, Color.Green,
-                Color.Blue, Color.Blue,
-                Color.Yellow, Color.Yellow,
-                Color.Purple, Color.Purple,
-                Color.Brown, Color.Brown
+                Color.Red, Color.Orange,
+                Color.Green, Color.White,
+                Color.Blue, Color.MediumTurquoise,
+                Color.Yellow, Color.DimGray,
+                Color.Purple, Color.DarkKhaki,
+                Color.Brown, Color.MediumAquamarine
             ];
         }
     }

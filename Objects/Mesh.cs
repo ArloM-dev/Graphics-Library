@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Numerics;
+using Newtonsoft.Json;
 
 namespace Graphics_Library.Objects
 {
@@ -21,5 +22,12 @@ namespace Graphics_Library.Objects
         public Vector3 rotation;
         public float scale;
         public Color[]? colours;
+
+        public void MeshFromJson(string path)
+        {
+            string appPath = AppContext.BaseDirectory;
+            string data = File.ReadAllText(appPath + path);
+            mesh = JsonConvert.DeserializeObject<Mesh>(data);
+        }
     }
 }
