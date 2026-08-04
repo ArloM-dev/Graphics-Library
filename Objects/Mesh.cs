@@ -5,14 +5,21 @@ namespace Graphics_Library.Objects
 {
     public class Mesh
     {
-        public Vector3[] points;
-        public int[] index;
-        public Color[] colours;
-        public Mesh(Vector3[] points, int[] index, Color[] colours)
+        public Vector3[] points {get; set;}
+        public int[][] index {get; set;}
+        public Mesh(Vector3[] points, int[][] index)
         {
             this.points = points;
             this.index = index;
-            this.colours = colours;
         }
+    }
+
+    public class MeshObject
+    {
+        public Mesh? mesh;
+        public Vector3 position;
+        public Vector3 rotation;
+        public float scale;
+        public Color[]? colours;
     }
 }

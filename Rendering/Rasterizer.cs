@@ -12,7 +12,10 @@ namespace Graphics_Library.Rendering
             (uint)((colour.R << 16) |
             (colour.G << 8) |
             colour.B);
-            canvas.frameBuffer[(int)(pixel.Y * canvas.Width + pixel.X)] = drawpixel;
+            if ((pixel.X < canvas.Width) & (pixel.Y < canvas.Height) & (pixel.X > 0) & (pixel.Y > 0))
+            {
+                canvas.frameBuffer[(int)(pixel.Y * canvas.Width + pixel.X)] = drawpixel;
+            }
             return canvas;
         }
         public static Canvas DrawTriangle(Triangle triangle, Canvas canvas)
@@ -49,19 +52,20 @@ namespace Graphics_Library.Rendering
 
         }
 
-        public static Canvas DrawMesh(Mesh mesh, Canvas canvas)
+        public static Canvas DrawMesh(MeshObject meshobject, Canvas canvas)
         {
             Triangle[] triangles = new Triangle[12];
             float[] depths = new float[12];
-            for (int i = 0; i < mesh.index.Length-2; i+=3)
+            Vector3[] points = GetPoints(meshobject);
+            for (int i = 0; i < meshobject.mesh?.index.Length; i+=1)
             {
-                Vector3 p1 = mesh.points[mesh.index[i]];
-                Vector3 p2 = mesh.points[mesh.index[i+1]];
-                Vector3 p3 = mesh.points[mesh.index[i+2]];
+                Vector3 p1 = points[meshobject.mesh.index[i][0]];
+                Vector3 p2 = points[meshobject.mesh.index[i][1]];
+                Vector3 p3 = points[meshobject.mesh.index[i][2]];
                 float depth = (p1.Z + p2.Z + p3.Z) / 3;
-                depths[i/3] = depth;
-                Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),mesh.colours[i/3]);
-                triangles[i/3] = triangle;
+                depths[i] = depth;
+                Triangle triangle = new Triangle(new Vector2(p1.X,p1.Y),new Vector2(p2.X,p2.Y),new Vector2(p3.X,p3.Y),meshobject.colours?[i] ?? Color.Purple);
+                triangles[i] = triangle;
             }
             triangles = OrderTriangles(triangles,depths);
             foreach (Triangle triangle in triangles)
@@ -69,6 +73,28 @@ namespace Graphics_Library.Rendering
                 canvas = DrawTriangle(triangle,canvas);
             }
             return canvas;
+        }
+
+        private static Vector3[] GetPoints(MeshObject meshobject)
+        {
+            Vector3[] points = new Vector3[8];
+            for (int i = 0; i < 8; i++)
+            {
+                Vector3 point = meshobject.mesh?.points[i] ?? new Vector3();
+
+                // X rotation
+                double y1 = (point.Y * Math.Cos(meshobject.rotation.X)) - (point.Z * Math.Sin(meshobject.rotation.X));
+                double z1 = (point.Y * Math.Sin(meshobject.rotation.X)) + (point.Z * Math.Cos(meshobject.rotation.X));
+                // Y rotation
+                double x1 = (point.X * Math.Cos(meshobject.rotation.Y)) + (z1 * Math.Sin(meshobject.rotation.Y));
+                double z2 = (-point.X * Math.Sin(meshobject.rotation.Y)) + (z1 * Math.Cos(meshobject.rotation.Y));
+                // Z rotation
+                double x2 = (x1 * Math.Cos(meshobject.rotation.Z)) - (y1 * Math.Sin(meshobject.rotation.Z));
+                double y2 = (x1 * Math.Sin(meshobject.rotation.Z)) + (y1 * Math.Cos(meshobject.rotation.Z));
+                
+                points[i] = (new Vector3((float)x2, (float)y2, (float)z2) * meshobject.scale) + meshobject.position;
+            }
+            return points;
         }
 
         private static Triangle[] OrderTriangles(Triangle[] triangles, float[] depths)
