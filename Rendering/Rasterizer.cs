@@ -39,7 +39,8 @@ namespace Graphics_Library.Rendering
                     // True if all signs match (all positive or all negative)
                     bool allPositive = e1 >= 0 && e2 >= 0 && e3 >= 0;
                     bool allNegative = e1 <= 0 && e2 <= 0 && e3 <= 0;
-                    if (allNegative || allPositive)
+                    bool allZero = (e1 == 0) && (e2 == 0) && (e3 == 0);
+                    if (allNegative || allPositive || allZero)
                     {
                         canvas = DrawPixel(new Vector2(x,y),triangle.colour, canvas);
                     }
